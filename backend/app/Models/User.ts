@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
-import Lesson from './Lesson'
+import Classroom from './Classroom'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -28,18 +28,13 @@ export default class User extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @manyToMany(() => Lesson)
-  public lessons: ManyToMany<typeof Lesson>
+  @manyToMany(() => Classroom)
+  public classrooms: ManyToMany<typeof Classroom>
 
   @beforeSave()
   public static async hashPassword(user: User) {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
     }
-  }
-
-  @beforeSave()
-  public static async setUserRole(user: User) {
-    user.role = 'teacher'
   }
 }

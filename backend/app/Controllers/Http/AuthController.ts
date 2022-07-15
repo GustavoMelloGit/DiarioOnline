@@ -10,7 +10,7 @@ export default class AuthController {
       const { name, id } = token.user
       return { token: token.token, name, email, id }
     } catch {
-      return response.badRequest('Invalid credentials')
+      return response.badRequest('Email e/ou senha inválidos')
     }
   }
 }
